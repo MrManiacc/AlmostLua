@@ -101,6 +101,12 @@ public interface AlmostLuaParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitObject(AlmostLuaParser.ObjectContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link AlmostLuaParser#table}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTable(AlmostLuaParser.TableContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AlmostLuaParser#attribute}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -173,6 +179,13 @@ public interface AlmostLuaParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitChunkObjectExpression(AlmostLuaParser.ChunkObjectExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code TableExpression}
+	 * labeled alternative in {@link AlmostLuaParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTableExpression(AlmostLuaParser.TableExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ObjectExpression}
 	 * labeled alternative in {@link AlmostLuaParser#expression}.

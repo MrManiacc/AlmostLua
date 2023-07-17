@@ -61,7 +61,7 @@ parameterList : Name (Comma Name)*;
  * It's a list of one or more expressions, followed by an assignment operator and another list of expressions.
  * The assignment ends with an optional semicolon.
  */
-assignment : left=expressions Assign right=expression Semi?;
+assignment : left=expressions Assign right=expressions Semi?;
 
 /**
  * This rule represents a list of one or more expressions.
@@ -74,6 +74,12 @@ expressions : expression (Comma expression)*;
  * This rule represents an object with an optional list of attributes.
  */
 object: LBrace name=identifier attributes? Divide RBrace;
+
+/**
+ * This rule represents a table with a block.
+ */
+table: OpenBrace block? CloseBrace;
+
 
 /**
  * This rule represents an attribute which consists of a name and an expression.
@@ -126,6 +132,7 @@ expression
     | identifier LParen attributes? RParen #FunctionCallExpression
     | left=expression op=binaryOperator right=expression #BinaryOperatorExpression
     | object #ObjectExpression
+    | table #TableExpression
 ;
 
 
@@ -155,12 +162,13 @@ binaryOperator
     | NotEqual
     | EqualEqual
     | StrConcat
-    | Plus
-    | Minus
-    | Multiply
-    | Divide
-    | Modulo
     | Pow
+    (Modulo
+    | Divide
+    | Multiply)
+    |
+    ( Plus
+    | Minus)
 ;
 
 /**

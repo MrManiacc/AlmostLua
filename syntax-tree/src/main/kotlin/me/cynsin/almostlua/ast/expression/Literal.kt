@@ -1,5 +1,7 @@
 package me.cynsin.almostlua.ast.expression
 
+import java.lang.StringBuilder
+
 data class Literal(val type: Type, val value: Any) : Expression {
 
     override fun toString(): String {
@@ -28,6 +30,12 @@ data class Literal(val type: Type, val value: Any) : Expression {
             else -> null
         }
 
+    val asDouble: Double?
+        get() = when (type) {
+            Type.Float -> if (value is Number) value.toDouble() else null
+            else -> null
+        }
+
     val asInt: Int?
         get() = when (type) {
             Type.Float -> if (value is Number) value.toInt() else null
@@ -40,6 +48,13 @@ data class Literal(val type: Type, val value: Any) : Expression {
             else -> null
         }
 
+    override fun dump(indent: Int, stringBuilder: StringBuilder): StringBuilder {
+        stringBuilder.append("\t".repeat(indent)).append("+ Literal")
+
+        stringBuilder.append(" = ($type, ${value})")
+
+        return stringBuilder
+    }
 
     enum class Type {
         Nil,
